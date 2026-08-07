@@ -34,11 +34,9 @@ app.use(hpp());
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV === "production"
-      ? process.env.CLIENT_URL_PROD
-      : process.env.CLIENT_URL,
+    origin: process.env.CLIENT_URL,
     credentials: true,
-  }),
+  })
 );
 
 /* ---------------- Middlewares ---------------- */
