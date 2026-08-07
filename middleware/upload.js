@@ -8,13 +8,14 @@ const storage = new CloudinaryStorage({
 
   params: async (req, file) => {
     const isPdf = file.mimetype === "application/pdf";
+    const filename = path.parse(file.originalname).name;
 
     return {
       folder: "myportfolio-vaibhav",
 
       resource_type: isPdf ? "raw" : "image",
 
-      public_id: `${Date.now()}-${path.parse(file.originalname).name}.${path.extname(file.originalname).slice(1)}`,
+      public_id: `${Date.now()}-${filename}${isPdf ? ".pdf" : ""}`,
     };
   },
 });
