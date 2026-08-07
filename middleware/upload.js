@@ -1,27 +1,7 @@
-// const multer = require("multer");
-// const { CloudinaryStorage } = require("multer-storage-cloudinary");
-// const cloudinary = require("../config/cloudinary");
-
-// const storage = new CloudinaryStorage({
-//     cloudinary,
-//     params: {
-//         folder: "myportfolio-vaibhav",
-//         allowed_formats: ["jpg", "jpeg", "png", "webp", "svg", "pdf"],
-//     },
-// });
-
-// const upload = multer({
-//     storage,
-//     limits: {
-//         fileSize: 10 * 1024 * 1024, // 10 MB
-//     },
-// });
-
-// module.exports = upload;
-
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
+const path = require("path");
 
 const storage = new CloudinaryStorage({
   cloudinary,
@@ -34,7 +14,7 @@ const storage = new CloudinaryStorage({
 
       resource_type: isPdf ? "raw" : "image",
 
-      public_id: `${Date.now()}-${file.originalname.split(".")[0]}`,
+      public_id: `${Date.now()}-${path.parse(file.originalname).name}.${path.extname(file.originalname).slice(1)}`,
     };
   },
 });

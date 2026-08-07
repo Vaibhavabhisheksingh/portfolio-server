@@ -31,19 +31,21 @@ app.use(compression());
 
 app.use(hpp());
 
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: process.env.NODE_ENV === "production"
+      ? process.env.CLIENT_URL_PROD
+      : process.env.CLIENT_URL,
     credentials: true,
-  })
+  }),
 );
 
 /* ---------------- Middlewares ---------------- */
 
-app.use(express.json({limit: "10kb"}));
+app.use(express.json({ limit: "10kb" }));
 
-app.use(express.urlencoded({ extended: true , limit: "10kb",}));
-
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 // General API Rate Limiter
 app.use("/api", apiLimiter);
@@ -84,8 +86,8 @@ app.use("/api/settings", settingRoutes);
 app.use("/api/contact", contactRoutes);
 
 // Admin APIs
-app.use("/api/dashboard",  dashboardRoutes);
-app.use("/api/upload",  uploadRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/upload", uploadRoutes);
 
 /* ---------------- Server ---------------- */
 
